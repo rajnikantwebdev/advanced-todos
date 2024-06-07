@@ -19,7 +19,7 @@ Prerequisites
 # Running the App
 start the development server (npm run dev or yarn run dev)
 
-The app will be available at http://localhost:3000.
+The app will be available at http://localhost:5173.
 
 # Usage
 
