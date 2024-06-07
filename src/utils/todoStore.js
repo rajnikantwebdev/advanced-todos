@@ -153,11 +153,14 @@ export const todoSlice = createSlice({
 
     markSubTodoAsComplete: (state, action) => {
       const { id, subTodoId } = action.payload;
+      // Map through todos to find the one that matches the provided id
       const updatedTodos = state.value.map((todo) => {
         if (todo.id === id) {
+          // For the matched todo, map through its subTodos to find the one that matches subTodoId
           return {
             ...todo,
             subTodo: todo.subTodo.map((sub) => {
+              // Toggle the isCompleted status of the matched subTodo if the main todo is not completed
               if (sub.id === subTodoId && todo.isCompleted === false) {
                 return {
                   ...sub,
@@ -172,6 +175,7 @@ export const todoSlice = createSlice({
           return todo;
         }
       });
+      // Update the state with the modified todos list
       state.value = updatedTodos;
     },
   },
