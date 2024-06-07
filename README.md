@@ -17,7 +17,7 @@ Prerequisites
 2. install dependencies (npm install or yarn install)
 
 # Running the App
-start the development server (npm start or yarn start)
+start the development server (npm run dev or yarn run dev)
 
 The app will be available at http://localhost:3000.
 
