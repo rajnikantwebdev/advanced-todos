@@ -13,7 +13,7 @@ Prerequisites
 2. npm or yarn
 
 # Installation
-1. Clone the repository (git clone )
+1. Clone the repository (git clone https://github.com/rajnikantwebdev/advanced-todos.git)
 2. install dependencies (npm install or yarn install)
 
 # Running the App
