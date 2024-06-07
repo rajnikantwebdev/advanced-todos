@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { editSubTodo } from "../utils/todoStore";
+import { editSubTodo, markSubTodoAsComplete } from "../utils/todoStore";
 
 const SubTodoList = ({ subTodo, mainTodoId, removeSubTodo }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(subTodo?.value);
   const dispatch = useDispatch();
+
+  // Function to handle updating the text of a sub-todo
   const handleUpdateText = () => {
     if (newText !== "") {
       dispatch(editSubTodo({ id: mainTodoId, subTodoId: subTodo.id, newText }));
@@ -20,7 +22,47 @@ const SubTodoList = ({ subTodo, mainTodoId, removeSubTodo }) => {
       } `}
     >
       {!isEditing ? (
-        <div onDoubleClick={() => setIsEditing(true)}>
+        <div
+          onDoubleClick={() =>
+            subTodo.isCompleted === false && setIsEditing(true)
+          }
+          className="flex items-center gap-4"
+        >
+          <div>
+            {/* Checkbox to mark sub-todo as completed */}
+            <input
+              type="checkbox"
+              name="todo"
+              id={`todo-${subTodo.id}`}
+              checked={subTodo?.isCompleted}
+              onChange={() =>
+                dispatch(
+                  markSubTodoAsComplete({
+                    id: mainTodoId,
+                    subTodoId: subTodo.id,
+                  })
+                )
+              }
+              className="regular-checkbox hidden"
+            />
+            <label htmlFor={`todo-${subTodo.id}`}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke={"black"}
+                className="size-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+            </label>
+          </div>
+          {/* Display sub-todo text */}
           <span>{subTodo?.value}</span>
         </div>
       ) : (
@@ -33,6 +75,7 @@ const SubTodoList = ({ subTodo, mainTodoId, removeSubTodo }) => {
           className="h-full px-4 py-2 w-full focus:outline-none bg-white text-black italic text-xl"
         />
       )}
+      {/* Button to remove sub-todo */}
       <div>
         <svg
           xmlns="http://www.w3.org/2000/svg"

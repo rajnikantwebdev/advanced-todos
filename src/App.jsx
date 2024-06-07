@@ -1,27 +1,30 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import TodoList from "./components/TodoList";
-// import { addSubTodo } from "./utils/addSubTodo";
-import { isTodoCompleted } from "./utils/isMainTodoDone";
 import { useDispatch } from "react-redux";
-import { addTodo } from "./utils/todoStore";
+import { addTodo, removeTodo, toggleTodo, addSubTodo } from "./utils/todoStore";
 import { useSelector } from "react-redux";
-import { removeTodo } from "./utils/todoStore";
-import { toggleTodo, addSubTodo } from "./utils/todoStore";
 
 function App() {
+  // State to manage the new todo input value
   const [value, setValue] = useState("");
-  const [isTodoDone, setIsTodoDone] = useState(false);
+  // State to manage the visibility of the add sub-todo modal
   const [addSubTodd, setAddSubTodo] = useState(false);
+  // State to manage the new sub-todo input value
   const [subTodoValue, setSubTodoValue] = useState("");
+  // State to keep track of the current main todo id for adding sub-todos
   const [currentMainTodoId, setCurrentMainTodoId] = useState(null);
 
+  // useDispatch hook to dispatch actions to the Redux store
   const dispatch = useDispatch();
+  // useSelector hook to select the todos state from the Redux store
   const todos = useSelector((state) => state.todos.value);
 
+  // Function to handle adding a new todo
   const handleAddTodo = () => {
     dispatch(addTodo({ value: value }));
   };
 
+  // Function to handle key down event for the new todo input
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && value !== "") {
       handleAddTodo();
@@ -29,10 +32,7 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
+  // Function to handle adding a new sub-todo
   const handleAddSubTodo = () => {
     if (subTodoValue !== "" && currentMainTodoId !== null) {
       dispatch(addSubTodo({ id: currentMainTodoId, value: subTodoValue }));
@@ -40,11 +40,16 @@ function App() {
     }
   };
 
+  // useEffect hook to store todos in localStorage whenever the todos state changes
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
+
   return (
     <section className="min-h-screen flex flex-col justify-center items-center w-full">
-      {/* sub-todos */}
+      {/* Sub-todo modal */}
       {addSubTodd && (
-        <div className="fixed z-10  px-6 py-9 min-w-[50%] min-h-[50%] bg-sixty">
+        <div className="fixed z-10 px-6 py-9 min-w-[50%] min-h-[50%] bg-sixty">
           <div className="flex bg-yellow-400 items-center h-20">
             <input
               value={subTodoValue}
@@ -70,10 +75,14 @@ function App() {
           </div>
         </div>
       )}
-      {/* sub-todos */}
+      {/* End of sub-todo modal */}
+
+      {/* Title section */}
       <div className="px-12 py-4 ">
         <h1 className="text-9xl font-bold italic text-ten">Todo</h1>
       </div>
+
+      {/* New todo input */}
       <div className="w-1/2 mb-4">
         <input
           onKeyDown={handleKeyDown}
@@ -84,6 +93,8 @@ function App() {
           placeholder="What needs to be done?"
         />
       </div>
+
+      {/* Todo list */}
       <div className="w-1/2">
         {todos.length !== 0 ? (
           todos?.map((todo) => {
@@ -91,7 +102,6 @@ function App() {
               <TodoList
                 key={todo.id}
                 todo={todo}
-                setIsTodoDone={setIsTodoDone}
                 isTodoCompleted={toggleTodo}
                 removeTodos={removeTodo}
                 setAddSubTodo={setAddSubTodo}

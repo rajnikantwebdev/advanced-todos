@@ -5,7 +5,6 @@ import { updateTodoText, removeSubTodo } from "../utils/todoStore";
 
 const TodoList = ({
   todo,
-  setIsTodoDone,
   isTodoCompleted,
   removeTodos,
   setAddSubTodo,
@@ -15,6 +14,7 @@ const TodoList = ({
   const [isEditing, setIsEditing] = useState(false);
   const [newText, setNewText] = useState(todo?.value);
 
+  // Function to handle updating the text of a todo
   const handleUpdateText = () => {
     if (newText !== "") {
       dispatch(updateTodoText({ id: todo.id, newText: newText }));
@@ -31,6 +31,7 @@ const TodoList = ({
       >
         <div className="flex items-center gap-8">
           <div>
+            {/* Checkbox to mark todo as completed */}
             <input
               type="checkbox"
               name="todo"
@@ -57,7 +58,12 @@ const TodoList = ({
             </label>
           </div>
           {!isEditing ? (
-            <div onDoubleClick={() => setIsEditing(true)}>
+            // Display todo text and enable editing on double click if not completed
+            <div
+              onDoubleClick={() =>
+                todo.isCompleted === false && setIsEditing(true)
+              }
+            >
               <span
                 className={`text-2xl italic ${
                   todo?.isCompleted ? "text-thirty" : "text-ten"
@@ -67,6 +73,7 @@ const TodoList = ({
               </span>
             </div>
           ) : (
+            // Input field for editing the todo text
             <input
               type="text"
               value={newText}
@@ -77,8 +84,9 @@ const TodoList = ({
             />
           )}
         </div>
-        <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity  duration-100">
+        <div className="flex items-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-100">
           {!todo?.isCompleted && (
+            // Button to add a sub-todo
             <button
               onClick={() => {
                 setAddSubTodo(true);
@@ -101,6 +109,7 @@ const TodoList = ({
               </svg>
             </button>
           )}
+          {/* Button to remove the todo */}
           <button onClick={() => dispatch(removeTodos({ id: todo.id }))}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -119,6 +128,7 @@ const TodoList = ({
           </button>
         </div>
       </div>
+      {/* Display sub-todos if they exist */}
       {todo?.subTodo.length !== 0 &&
         todo.subTodo.map((sub) => {
           return (
