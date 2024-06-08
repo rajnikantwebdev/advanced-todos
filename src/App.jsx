@@ -92,6 +92,20 @@ function App() {
           className="px-4 py-6 w-full focus:outline-none drop-shadow-lg bg-thirty text-white text-2xl"
           placeholder="What needs to be done?"
         />
+        <div className="w-full bg-thirty flex items-center px-4 py-6 gap-8">
+          <div>
+            <input type="radio" name="priority" id="radioOne" />
+            <label htmlFor="radioOne">High</label>
+          </div>
+          <div>
+            <input type="radio" name="priority" id="radioOne" />
+            <label htmlFor="radioOne">Medium</label>
+          </div>
+          <div>
+            <input type="radio" name="priority" id="radioOne" />
+            <label htmlFor="radioOne">Low</label>
+          </div>
+        </div>
       </div>
 
       {/* Todo list */}
