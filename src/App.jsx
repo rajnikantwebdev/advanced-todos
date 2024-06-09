@@ -13,7 +13,7 @@ function App() {
   const [subTodoValue, setSubTodoValue] = useState("");
   // State to keep track of the current main todo id for adding sub-todos
   const [currentMainTodoId, setCurrentMainTodoId] = useState(null);
-
+  const [priority, setPriority] = useState(null);
   // useDispatch hook to dispatch actions to the Redux store
   const dispatch = useDispatch();
   // useSelector hook to select the todos state from the Redux store
@@ -26,7 +26,7 @@ function App() {
 
   // Function to handle key down event for the new todo input
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && value !== "") {
+    if (e.key === "Enter" && value !== "" && priority !== null) {
       handleAddTodo();
       setValue("");
     }
@@ -44,7 +44,7 @@ function App() {
   useEffect(() => {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
-
+  console.log("priority: ", priority);
   return (
     <section className="min-h-screen flex flex-col justify-center items-center w-full">
       {/* Sub-todo modal */}
@@ -94,16 +94,52 @@ function App() {
         />
         <div className="w-full bg-thirty flex items-center px-4 py-6 gap-8">
           <div>
-            <input type="radio" name="priority" id="radioOne" />
-            <label htmlFor="radioOne">High</label>
+            <input
+              value={"High"}
+              onChange={(e) => setPriority(e.target.value)}
+              type="radio"
+              name="priority"
+              id="radioHigh"
+              className="hidden"
+            />
+            <label
+              htmlFor="radioHigh"
+              className="text-ten px-2 py-1 border border-ten rounded-3xl"
+            >
+              High
+            </label>
           </div>
           <div>
-            <input type="radio" name="priority" id="radioOne" />
-            <label htmlFor="radioOne">Medium</label>
+            <input
+              value={"Medium"}
+              onChange={(e) => setPriority(e.target.value)}
+              type="radio"
+              name="priority"
+              id="radioMedium"
+              className="hidden"
+            />
+            <label
+              htmlFor="radioMedium"
+              className="text-ten px-2 py-1 border border-ten rounded-3xl"
+            >
+              Medium
+            </label>
           </div>
           <div>
-            <input type="radio" name="priority" id="radioOne" />
-            <label htmlFor="radioOne">Low</label>
+            <input
+              onChange={(e) => setPriority(e.target.value)}
+              value={"Low"}
+              type="radio"
+              name="priority"
+              id="radioLow"
+              className="hidden"
+            />
+            <label
+              htmlFor="radioLow"
+              className="text-ten px-2 py-1 border border-ten rounded-3xl"
+            >
+              Low
+            </label>
           </div>
         </div>
       </div>
