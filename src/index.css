@@ -5,3 +5,18 @@
 body {
   background-color: #121212;
 }
+
+.high-priority {
+  background-color: #1abc9c; /* bright teal */
+  color: white; /* ensure text is readable */
+}
+
+.medium-priority {
+  background-color: #333333; /* medium dark */
+  color: white; /* ensure text is readable */
+}
+
+.low-priority {
+  background-color: #121212; /* dark */
+  color: white; /* ensure text is readable */
+}

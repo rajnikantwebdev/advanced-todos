@@ -27,7 +27,7 @@ const TodoList = ({
       <div
         className={`w-full border border-gray-600 shadow-md flex items-center px-4 py-4 justify-between ${
           todo?.isCompleted ? "bg-thirty bg-opacity-50" : "bg-thirty"
-        } group`}
+        } group `}
       >
         <div className="flex items-center gap-8">
           <div>
@@ -64,13 +64,20 @@ const TodoList = ({
                 todo.isCompleted === false && setIsEditing(true)
               }
             >
-              <span
-                className={`text-2xl italic ${
-                  todo?.isCompleted ? "text-thirty" : "text-ten"
-                } `}
-              >
-                {todo?.value}
-              </span>
+              <div className="flex gap-4 items-center">
+                <span
+                  className={`text-2xl italic ${
+                    todo?.isCompleted ? "text-thirty" : "text-ten"
+                  } `}
+                >
+                  {todo?.value}
+                </span>
+                <span
+                  className={`text-ten px-2 py-1 border border-ten rounded-3xl text-xs`}
+                >
+                  {todo.priority}
+                </span>
+              </div>
             </div>
           ) : (
             // Input field for editing the todo text

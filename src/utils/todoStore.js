@@ -33,6 +33,7 @@ export const todoSlice = createSlice({
         value: action.payload.value, // Set the value of the todo from action payload
         isCompleted: false, // Initialize the todo as not completed
         subTodo: [], // Initialize an empty array for potential subTodos
+        priority: action.payload.priorityLevel, // add a priority level (High, med, low)
       });
     },
 

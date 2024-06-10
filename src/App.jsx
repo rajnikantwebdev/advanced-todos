@@ -21,7 +21,8 @@ function App() {
 
   // Function to handle adding a new todo
   const handleAddTodo = () => {
-    dispatch(addTodo({ value: value }));
+    dispatch(addTodo({ value: value, priorityLevel: priority }));
+    setPriority(null);
   };
 
   // Function to handle key down event for the new todo input
@@ -104,7 +105,9 @@ function App() {
             />
             <label
               htmlFor="radioHigh"
-              className="text-ten px-2 py-1 border border-ten rounded-3xl"
+              className={`text-ten px-2 py-1 border border-ten rounded-3xl ${
+                priority === "High" && "bg-ten text-white transition delay-75"
+              }`}
             >
               High
             </label>
@@ -120,7 +123,9 @@ function App() {
             />
             <label
               htmlFor="radioMedium"
-              className="text-ten px-2 py-1 border border-ten rounded-3xl"
+              className={`text-ten px-2 py-1 border border-ten rounded-3xl ${
+                priority === "Medium" && "bg-ten text-white transition delay-75"
+              }`}
             >
               Medium
             </label>
@@ -136,7 +141,9 @@ function App() {
             />
             <label
               htmlFor="radioLow"
-              className="text-ten px-2 py-1 border border-ten rounded-3xl"
+              className={`text-ten px-2 py-1 border border-ten rounded-3xl ${
+                priority === "Low" && "bg-ten text-white transition delay-75"
+              }`}
             >
               Low
             </label>
